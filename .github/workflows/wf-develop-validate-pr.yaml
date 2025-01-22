@@ -1,0 +1,19 @@
+name: wf-develop-pr
+on:
+  pull-requests:
+    branches:
+     - develop
+jobs:
+   develop-pr-job:
+     run-on: ubuntu-latest
+     steps:
+       - name: checkour repo
+         uses: actions/checkout@v4
+       - name: lint html and css assests
+         run: |
+         npx htmlhint "**/.html"
+         npx stylelint "**/.css"
+       - name: build website
+         run: |
+           npx parcel build "./src/index.html" --dist-dirc "./dist" --public-url "./"
+                 
